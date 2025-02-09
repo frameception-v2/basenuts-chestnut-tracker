@@ -20,7 +20,8 @@ import { base, optimism } from "wagmi/chains";
 import { useSession } from "next-auth/react";
 import { createStore } from "mipd";
 import { Label } from "~/components/ui/label";
-import { PROJECT_TITLE } from "~/lib/constants";
+import { PROJECT_TITLE, START_DATE, DAILY_ALLOWANCE } from "~/lib/constants";
+import Image from 'next/image';
 
 function UserStats({ context, receivedNuts, sentNuts, failedAttempts }: { 
   context: Context.FrameContext, 
@@ -48,10 +49,12 @@ function UserStats({ context, receivedNuts, sentNuts, failedAttempts }: {
       <CardHeader>
         <div className="flex items-center gap-3">
           {context.user?.pfpUrl && (
-            <img 
+            <Image 
               src={context.user.pfpUrl} 
               alt="Profile"
-              className="w-12 h-12 rounded-full border-2 border-amber-200"
+              width={48}
+              height={48}
+              className="rounded-full border-2 border-amber-200"
             />
           )}
           <div>
@@ -125,7 +128,7 @@ export default function Frame() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [context?.user?.fid]);
+  }, [context?.user, context?.user?.fid]);
 
   const [added, setAdded] = useState(false);
 
